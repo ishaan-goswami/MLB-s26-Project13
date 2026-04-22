@@ -1,0 +1,78 @@
+project:
+  name: cross_species_protein_function_prediction
+  seed: 42
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  embeddings_dir: artifacts/embeddings
+  models_dir: artifacts/models
+  search_dir: artifacts/search
+  eval_dir: artifacts/eval
+
+species:
+  human:
+    name: Homo sapiens
+    taxid: "9606"
+    fasta_url: https://stringdb-downloads.org/download/protein.sequences.v12.0/9606.protein.sequences.v12.0.fa.gz
+    aliases_url: https://stringdb-downloads.org/download/protein.aliases.v12.0/9606.protein.aliases.v12.0.txt.gz
+    goa_url: https://ftp.ebi.ac.uk/pub/databases/GO/goa/HUMAN/goa_human.gaf.gz
+  yeast:
+    name: Saccharomyces cerevisiae
+    taxid: "4932"
+    fasta_url: https://stringdb-downloads.org/download/protein.sequences.v12.0/4932.protein.sequences.v12.0.fa.gz
+    aliases_url: https://stringdb-downloads.org/download/protein.aliases.v12.0/4932.protein.aliases.v12.0.txt.gz
+    goa_url: https://ftp.ebi.ac.uk/pub/databases/GO/goa/YEAST/goa_yeast.gaf.gz
+
+ontology:
+  go_basic_url: https://purl.obolibrary.org/obo/go/go-basic.obo
+  experimental_evidence_codes:
+    - EXP
+    - IDA
+    - IPI
+    - IMP
+    - IGI
+    - IEP
+  aspects:
+    F: MF
+    P: BP
+    C: CC
+
+models:
+  esm2_650m:
+    family: transformers_esm
+    model_name: facebook/esm2_t33_650M_UR50D
+    embedding_dim: 1280
+    max_length: 1022
+    batch_size: 2
+  prott5_xl:
+    family: transformers_t5
+    model_name: Rostlab/prot_t5_xl_half_uniref50-enc
+    embedding_dim: 1024
+    max_length: 512
+    batch_size: 1
+  esmc_600m:
+    family: esmc
+    model_name: esmc_600m
+    embedding_dim: 960
+    max_length: 2048
+    batch_size: 1
+
+retrieval:
+  source_species: yeast
+  target_species: human
+  top_k: 10
+  metric: cosine
+
+training:
+  projector_hidden_dims: [512, 256]
+  projector_dropout: 0.2
+  projection_dim: 256
+  batch_size: 256
+  epochs: 10
+  lr: 0.001
+  weight_decay: 0.0001
+  positives_per_query: 5
+  negatives_per_query: 5
+  min_jaccard_for_positive: 0.1
+

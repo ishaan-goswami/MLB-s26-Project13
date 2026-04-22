@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+src/cross_species_pfp/__init__.py
+src/cross_species_pfp/config.py
+src/cross_species_pfp/embedding_models.py
+src/cross_species_pfp/evaluation.py
+src/cross_species_pfp/faiss_utils.py
+src/cross_species_pfp/fasta_utils.py
+src/cross_species_pfp/go_utils.py
+src/cross_species_pfp/io_utils.py
+src/cross_species_pfp/projector.py
+src/cross_species_pfp.egg-info/PKG-INFO
+src/cross_species_pfp.egg-info/SOURCES.txt
+src/cross_species_pfp.egg-info/dependency_links.txt
+src/cross_species_pfp.egg-info/top_level.txt
